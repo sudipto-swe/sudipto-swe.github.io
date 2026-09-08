@@ -13,7 +13,7 @@ export const cvData = {
     scholar: "https://scholar.google.com",
     linkedin: "https://linkedin.com/in/sudipto-swe",
     photoUrl: "./profile.jpg",
-    about: "Undergraduate Software Engineering researcher focusing on Software Testing, Flaky Test Detection, Benchmark Reproducibility, and On-Device ML & LLM Quantization. Thesis research conducted under the direct supervision of Dr. Md. Abdul Kader with additional guidance from Dr. Imran Mahmud and Dr. S M Hasan Mahmud."
+    about: "Undergraduate Software Engineering researcher. Research Focus: Empirical Software Engineering (Testing & Reliability) and Trustworthy, Robust & Efficient AI for Code. Thesis research conducted under the direct supervision of Dr. Md. Abdul Kader with additional guidance from Dr. Imran Mahmud and Dr. S M Hasan Mahmud."
   },
 
   stats: [

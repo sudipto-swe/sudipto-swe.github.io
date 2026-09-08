@@ -71,7 +71,6 @@ export default function Hero({ onDownloadCV }) {
                 fontSize: '0.72rem', fontWeight: 600, color: '#a5b4fc',
                 letterSpacing: '0.03em'
               }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#818cf8', display: 'inline-block' }}></span>
                 Targeting Ph.D. in CS / Software Engineering — Fall 2027 / 2026
               </span>
             </div>
@@ -110,11 +109,7 @@ export default function Hero({ onDownloadCV }) {
               maxWidth: 560,
               marginBottom: '1.75rem'
             }}>
-              My research spans <strong style={{ color: 'var(--text-primary)' }}>empirical software testing</strong>, 
-              flaky test benchmark reproducibility, and{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>on-device LLM quantization</strong> for 
-              edge hardware. I am actively seeking Ph.D. positions in the United States for Fall 2027 / 2026 
-              in Computer Science and Software Engineering.
+              <strong style={{ color: 'var(--text-primary)' }}>Research Focus:</strong> Empirical Software Engineering (Testing & Reliability) and Trustworthy, Robust & Efficient AI for Code. I am actively seeking Ph.D. positions in the United States for Fall 2027 / 2026 in Computer Science and Software Engineering.
             </p>
 
             {/* Research tags */}
