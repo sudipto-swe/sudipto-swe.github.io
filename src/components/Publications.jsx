@@ -42,7 +42,7 @@ export default function Publications({ onOpenBibtex }) {
         <div className="section-label">Academic Output</div>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2.5rem', gap: '1rem', flexWrap: 'wrap' }}>
           <h2 className="section-title">Manuscripts & Working Papers</h2>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'var(--glass)', border: '1px solid var(--border)', borderRadius: 8, padding: '5px 12px', fontFamily: 'JetBrains Mono, monospace' }}>
+          <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--glass)', border: '1px solid var(--border)', borderRadius: 8, padding: '6px 14px', fontFamily: 'JetBrains Mono, monospace' }}>
             ACM TOSEM · IEEE TMC · ACM FSE · USENIX Sec
           </span>
         </div>
@@ -58,7 +58,7 @@ export default function Publications({ onOpenBibtex }) {
                     {/* Badges */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
                       <span className={`badge ${VENUE_COLORS[ms.badge] || 'badge-indigo'}`}>
-                        <Bookmark size={10} /> {ms.badge}
+                        <Bookmark size={11} /> {ms.badge}
                       </span>
                       <span className="badge badge-teal" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
                         {ms.status}
@@ -68,7 +68,7 @@ export default function Publications({ onOpenBibtex }) {
                     {/* Title */}
                     <h3 style={{
                       fontFamily: 'Newsreader, Georgia, serif',
-                      fontSize: '1.1rem',
+                      fontSize: '1.22rem',
                       fontWeight: 700,
                       color: 'var(--text-primary)',
                       lineHeight: 1.4,
@@ -78,7 +78,7 @@ export default function Publications({ onOpenBibtex }) {
                     </h3>
 
                     {/* Authors */}
-                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: 6 }}>
+                    <div style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', marginBottom: 6 }}>
                       {ms.authors.map((a, i) => (
                         <span key={i}>
                           <span style={a === 'Sudipto Biswas' ? { fontWeight: 700, color: '#818cf8', textDecoration: 'underline', textDecorationColor: 'rgba(129,140,248,0.4)' } : {}}>
@@ -90,8 +90,8 @@ export default function Publications({ onOpenBibtex }) {
                     </div>
 
                     {/* Venue */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.77rem', color: 'var(--gold-light)' }}>
-                      <Tag size={11} /> {ms.targetVenue}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.86rem', color: 'var(--gold-light)' }}>
+                      <Tag size={12} /> {ms.targetVenue}
                     </div>
                   </div>
 
@@ -99,9 +99,9 @@ export default function Publications({ onOpenBibtex }) {
                   <button
                     onClick={() => toggle(ms.id)}
                     className="btn btn-outline"
-                    style={{ padding: '6px 12px', fontSize: '0.75rem', flexShrink: 0, gap: 5 }}
+                    style={{ padding: '7px 14px', fontSize: '0.82rem', flexShrink: 0, gap: 5 }}
                   >
-                    {open ? <><ChevronUp size={13} /> Collapse</> : <><ChevronDown size={13} /> Abstract</>}
+                    {open ? <><ChevronUp size={14} /> Collapse</> : <><ChevronDown size={14} /> Abstract</>}
                   </button>
                 </div>
 

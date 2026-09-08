@@ -30,10 +30,10 @@ function StatCard({ stat, animate }) {
       <div className="stat-number" style={{ color: 'var(--indigo-light)' }}>
         {animate ? `${num}${suffix}` : stat.value}
       </div>
-      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginTop: 4 }}>
+      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-secondary)', marginTop: 4 }}>
         {stat.label}
       </div>
-      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.4 }}>
+      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: 4, lineHeight: 1.45 }}>
         {stat.detail}
       </div>
     </div>
@@ -56,7 +56,7 @@ export default function Hero({ onDownloadCV }) {
       <div className="hero-bg"></div>
       <div className="hero-grid-lines"></div>
 
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', position: 'relative', zIndex: 1, width: '100%' }}>
+      <div className="container" style={{ paddingTop: '2.5rem', paddingBottom: '4.5rem', position: 'relative', zIndex: 1, width: '100%' }}>
         
         <div className="hero-layout" style={{ display: 'flex', alignItems: 'center', gap: '4rem' }}>
 
@@ -66,9 +66,9 @@ export default function Hero({ onDownloadCV }) {
             <div className={`fade-up fade-up-1`} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '5px 14px', borderRadius: 999,
+                padding: '6px 16px', borderRadius: 999,
                 background: 'rgba(79,99,210,0.12)', border: '1px solid rgba(79,99,210,0.3)',
-                fontSize: '0.72rem', fontWeight: 600, color: '#a5b4fc',
+                fontSize: '0.82rem', fontWeight: 600, color: '#a5b4fc',
                 letterSpacing: '0.03em'
               }}>
                 Targeting Ph.D. in CS / Software Engineering — Fall 2027 / 2026
@@ -78,22 +78,22 @@ export default function Hero({ onDownloadCV }) {
             {/* Name */}
             <h1 className="fade-up fade-up-2" style={{
               fontFamily: 'Newsreader, Georgia, serif',
-              fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+              fontSize: 'clamp(2.7rem, 5.5vw, 4rem)',
               fontWeight: 700,
               color: '#f8fafc',
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
-              marginBottom: '0.5rem'
+              marginBottom: '0.6rem'
             }}>
               Sudipto Biswas
             </h1>
 
             {/* Title line */}
             <p className="fade-up fade-up-2" style={{
-              fontSize: '1.05rem',
+              fontSize: '1.15rem',
               color: 'var(--text-secondary)',
               fontWeight: 400,
-              marginBottom: '1.5rem',
+              marginBottom: '1.6rem',
               lineHeight: 1.5
             }}>
               <span style={{ color: '#818cf8', fontWeight: 600 }}>Undergraduate Researcher</span>
@@ -104,10 +104,10 @@ export default function Hero({ onDownloadCV }) {
             {/* About text */}
             <p className="fade-up fade-up-3" style={{
               color: 'var(--text-secondary)',
-              fontSize: '0.93rem',
-              lineHeight: 1.8,
-              maxWidth: 560,
-              marginBottom: '1.75rem'
+              fontSize: '1.02rem',
+              lineHeight: 1.85,
+              maxWidth: 600,
+              marginBottom: '1.85rem'
             }}>
               <strong style={{ color: 'var(--text-primary)' }}>Research Focus:</strong> Empirical Software Engineering (Testing & Reliability) and Trustworthy, Robust & Efficient AI for Code. I am actively seeking Ph.D. positions in the United States for Fall 2027 / 2026 in Computer Science and Software Engineering.
             </p>
@@ -122,27 +122,27 @@ export default function Hero({ onDownloadCV }) {
             {/* CTA Buttons */}
             <div className="fade-up fade-up-4" style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
               <a href={`mailto:${personal.email}`} className="btn btn-primary">
-                <Mail size={14} /> Contact Me
+                <Mail size={15} /> Contact Me
               </a>
               <a href={personal.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                <Github size={14} /> GitHub <ArrowUpRight size={12} />
+                <Github size={15} /> GitHub <ArrowUpRight size={13} />
               </a>
               <a href={personal.scholar} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                <BookOpen size={14} /> Google Scholar <ArrowUpRight size={12} />
+                <BookOpen size={15} /> Google Scholar <ArrowUpRight size={13} />
               </a>
               <button onClick={onDownloadCV} className="btn btn-teal">
-                <Download size={14} /> CV (PDF)
+                <Download size={15} /> CV (PDF)
               </button>
             </div>
 
             {/* Contact meta */}
-            <div className="fade-up fade-up-4" style={{ display: 'flex', gap: 20, marginTop: '1.25rem', flexWrap: 'wrap' }}>
+            <div className="fade-up fade-up-4" style={{ display: 'flex', gap: 22, marginTop: '1.35rem', flexWrap: 'wrap' }}>
               {[
-                { icon: <Mail size={13} />, text: personal.email },
-                { icon: <Phone size={13} />, text: personal.phone },
-                { icon: <MapPin size={13} />, text: `${personal.institution}, ${personal.location}` },
+                { icon: <Mail size={14} />, text: personal.email },
+                { icon: <Phone size={14} />, text: personal.phone },
+                { icon: <MapPin size={14} />, text: `${personal.institution}, ${personal.location}` },
               ].map(({ icon, text }) => (
-                <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: '0.84rem', color: 'var(--text-muted)' }}>
                   <span style={{ color: 'var(--indigo-light)' }}>{icon}</span> {text}
                 </span>
               ))}
@@ -155,7 +155,7 @@ export default function Hero({ onDownloadCV }) {
             <div style={{ position: 'relative' }}>
               <div style={{
                 position: 'relative', zIndex: 1,
-                width: 220, height: 270,
+                width: 230, height: 280,
                 borderRadius: 18,
                 overflow: 'hidden',
                 border: '1px solid var(--border-strong)',
@@ -171,18 +171,18 @@ export default function Hero({ onDownloadCV }) {
               <div style={{
                 position: 'absolute', bottom: -14, left: '50%', transform: 'translateX(-50%)',
                 background: 'var(--navy-800)', border: '1px solid var(--border-strong)',
-                borderRadius: 8, padding: '5px 12px',
+                borderRadius: 8, padding: '5px 14px',
                 display: 'flex', alignItems: 'center', gap: 6,
                 whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(0,0,0,0.4)', zIndex: 2
               }}>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>B.Sc. SWE</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>B.Sc. SWE</span>
                 <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--text-muted)' }}></span>
-                <span style={{ fontSize: '0.7rem', color: '#818cf8', fontWeight: 600 }}>DIU, 2026</span>
+                <span style={{ fontSize: '0.78rem', color: '#818cf8', fontWeight: 600 }}>DIU, 2026</span>
               </div>
             </div>
 
             {/* Stats grid */}
-            <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: 260, marginTop: '1rem' }}>
+            <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: 270, marginTop: '1rem' }}>
               {stats.map((s, i) => <StatCard key={i} stat={s} animate={inView} />)}
             </div>
           </div>
@@ -190,10 +190,10 @@ export default function Hero({ onDownloadCV }) {
         </div>
 
         {/* Scroll cue */}
-        <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center' }}>
-          <a href="#research" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, color: 'var(--text-muted)', fontSize: '0.7rem', textDecoration: 'none', opacity: 0.6 }}>
+        <div style={{ marginTop: '3.5rem', display: 'flex', justifyContent: 'center' }}>
+          <a href="#research" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, color: 'var(--text-muted)', fontSize: '0.78rem', textDecoration: 'none', opacity: 0.7 }}>
             <span>Scroll to explore</span>
-            <ChevronDown size={14} />
+            <ChevronDown size={15} />
           </a>
         </div>
 
