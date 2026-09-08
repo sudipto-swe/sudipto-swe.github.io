@@ -1,125 +1,215 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { cvData } from '../data/cvData';
-import { Mail, Github, BookOpen, Download, MapPin, Award, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Mail, Github, BookOpen, Download, MapPin, Phone, ArrowUpRight, ChevronDown } from 'lucide-react';
+
+function useCountUp(target, duration = 1800, start = false) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let startTime = null;
+    const numeric = parseFloat(target.replace(/[^0-9.]/g, ''));
+    const suffix  = target.replace(/[0-9.,]/g, '');
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setVal(+(numeric * eased).toFixed(numeric % 1 !== 0 ? 1 : 0));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [start, target, duration]);
+  return val;
+}
+
+function StatCard({ stat, animate }) {
+  const num = useCountUp(stat.value, 1600, animate);
+  const suffix = stat.value.replace(/[0-9.,]/g, '');
+  return (
+    <div className="card" style={{ padding: '1.25rem', textAlign: 'center' }}>
+      <div className="stat-number" style={{ color: 'var(--indigo-light)' }}>
+        {animate ? `${num}${suffix}` : stat.value}
+      </div>
+      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginTop: 4 }}>
+        {stat.label}
+      </div>
+      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.4 }}>
+        {stat.detail}
+      </div>
+    </div>
+  );
+}
 
 export default function Hero({ onDownloadCV }) {
   const { personal, stats } = cvData;
+  const heroRef = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold: 0.2 });
+    if (heroRef.current) obs.observe(heroRef.current);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <section id="about" className="pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      
-      {/* Target PhD Banner */}
-      <div className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-950/70 border border-indigo-500/30 text-indigo-300 text-xs sm:text-sm font-medium tracking-wide">
-        <span className="flex h-2 w-2 rounded-full bg-indigo-400 animate-ping"></span>
-        <span className="flex h-2 w-2 rounded-full bg-indigo-500 -ml-4"></span>
-        <Award className="w-4 h-4 text-indigo-400 ml-1" />
-        <span>{personal.targetDegree}</span>
-      </div>
+    <section id="about" className="hero" ref={heroRef}>
+      <div className="hero-bg"></div>
+      <div className="hero-grid-lines"></div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', position: 'relative', zIndex: 1, width: '100%' }}>
         
-        {/* Left main info */}
-        <div className="lg:col-span-8 space-y-6">
-          <div>
-            <h1 className="text-4xl sm:text-5xl font-serif-academic font-bold tracking-tight text-white">
-              {personal.name}
-            </h1>
-            <p className="mt-2 text-xl font-medium text-indigo-400">
-              {personal.title} — <span className="text-slate-300 font-normal">{personal.subtitle}</span>
-            </p>
-            <p className="mt-1 text-sm text-slate-400 flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-rose-400" />
-              <span>{personal.institution}, {personal.location}</span>
-            </p>
-          </div>
+        <div className="hero-layout" style={{ display: 'flex', alignItems: 'center', gap: '4rem' }}>
 
-          <p className="text-slate-300 leading-relaxed text-base sm:text-lg">
-            {personal.about}
-          </p>
-
-          {/* Research Interest Tags */}
-          <div className="flex flex-wrap gap-2 pt-1">
-            {["Software Testing & QA", "Flaky Test Detection", "Benchmark Reproducibility", "On-Device ML", "Model Quantization", "AST Code Analysis"].map((tag, idx) => (
-              <span 
-                key={idx}
-                className="px-3 py-1 rounded-md text-xs font-mono-code bg-slate-800/80 text-indigo-300 border border-slate-700/60"
-              >
-                #{tag}
+          {/* ── Left: Bio ── */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Status badge */}
+            <div className={`fade-up fade-up-1`} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '5px 14px', borderRadius: 999,
+                background: 'rgba(79,99,210,0.12)', border: '1px solid rgba(79,99,210,0.3)',
+                fontSize: '0.72rem', fontWeight: 600, color: '#a5b4fc',
+                letterSpacing: '0.03em'
+              }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#6ee7b7', display: 'inline-block', boxShadow: '0 0 6px #6ee7b7' }}></span>
+                Targeting Ph.D. in CS / Software Engineering — Fall 2027 / 2026
               </span>
-            ))}
-          </div>
+            </div>
 
-          {/* Contact / Action Links */}
-          <div className="flex flex-wrap items-center gap-3 pt-4">
-            <a
-              href={`mailto:${personal.email}`}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition shadow-lg shadow-indigo-600/20"
-            >
-              <Mail className="w-4 h-4" />
-              <span>Contact via Email</span>
-            </a>
+            {/* Name */}
+            <h1 className="fade-up fade-up-2" style={{
+              fontFamily: 'Newsreader, Georgia, serif',
+              fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+              fontWeight: 700,
+              color: '#f8fafc',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
+              marginBottom: '0.5rem'
+            }}>
+              Sudipto Biswas
+            </h1>
 
-            <a
-              href={personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition"
-            >
-              <Github className="w-4 h-4" />
-              <span>GitHub</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-            </a>
+            {/* Title line */}
+            <p className="fade-up fade-up-2" style={{
+              fontSize: '1.05rem',
+              color: 'var(--text-secondary)',
+              fontWeight: 400,
+              marginBottom: '1.5rem',
+              lineHeight: 1.5
+            }}>
+              <span style={{ color: '#818cf8', fontWeight: 600 }}>Undergraduate Researcher</span>
+              {' · '}B.Sc. Software Engineering
+              {' · '}Daffodil International University
+            </p>
 
-            <a
-              href={personal.scholar}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Google Scholar</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-            </a>
+            {/* About text */}
+            <p className="fade-up fade-up-3" style={{
+              color: 'var(--text-secondary)',
+              fontSize: '0.93rem',
+              lineHeight: 1.8,
+              maxWidth: 560,
+              marginBottom: '1.75rem'
+            }}>
+              My research spans <strong style={{ color: 'var(--text-primary)' }}>empirical software testing</strong>, 
+              flaky test benchmark reproducibility, and{' '}
+              <strong style={{ color: 'var(--text-primary)' }}>on-device LLM quantization</strong> for 
+              edge hardware. I am actively seeking Ph.D. positions in the United States for Fall 2027 / 2026 
+              in Computer Science and Software Engineering.
+            </p>
 
-            <button
-              onClick={onDownloadCV}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-teal-600/90 hover:bg-teal-500 text-white font-medium text-sm transition shadow-lg shadow-teal-600/20"
-            >
-              <Download className="w-4 h-4" />
-              <span>CV (PDF)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Right Stats & Highlights */}
-        <div className="lg:col-span-4 space-y-4">
-          <div className="p-6 glass-card bg-slate-900/60 border-indigo-500/20">
-            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center justify-between">
-              <span>Research Metrics</span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            </h3>
-
-            <div className="grid grid-cols-2 gap-4">
-              {stats.map((stat, idx) => (
-                <div key={idx} className="p-3 rounded-lg bg-slate-950/70 border border-slate-800">
-                  <div className="text-2xl font-bold font-serif-academic text-indigo-400">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs font-medium text-slate-200 mt-0.5">
-                    {stat.label}
-                  </div>
-                  <div className="text-[10px] text-slate-400 mt-1 leading-tight">
-                    {stat.detail}
-                  </div>
-                </div>
+            {/* Research tags */}
+            <div className="fade-up fade-up-3" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: '2rem' }}>
+              {['Software Testing', 'Flaky Test Detection', 'Benchmark Reproducibility', 'On-Device ML', 'LLM Quantization', 'AST Analysis'].map(t => (
+                <span key={t} className="badge badge-indigo">{t}</span>
               ))}
             </div>
 
-            <div className="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
-              <span>Undergraduate Thesis Supervisor:</span>
-              <span className="font-semibold text-indigo-300">Dr. Md. Abdul Kader</span>
+            {/* CTA Buttons */}
+            <div className="fade-up fade-up-4" style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+              <a href={`mailto:${personal.email}`} className="btn btn-primary">
+                <Mail size={14} /> Contact Me
+              </a>
+              <a href={personal.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <Github size={14} /> GitHub <ArrowUpRight size={12} />
+              </a>
+              <a href={personal.scholar} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <BookOpen size={14} /> Google Scholar <ArrowUpRight size={12} />
+              </a>
+              <button onClick={onDownloadCV} className="btn btn-teal">
+                <Download size={14} /> CV (PDF)
+              </button>
+            </div>
+
+            {/* Contact meta */}
+            <div className="fade-up fade-up-4" style={{ display: 'flex', gap: 20, marginTop: '1.25rem', flexWrap: 'wrap' }}>
+              {[
+                { icon: <Mail size={13} />, text: personal.email },
+                { icon: <Phone size={13} />, text: personal.phone },
+                { icon: <MapPin size={13} />, text: `${personal.institution}, ${personal.location}` },
+              ].map(({ icon, text }) => (
+                <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  <span style={{ color: 'var(--indigo-light)' }}>{icon}</span> {text}
+                </span>
+              ))}
             </div>
           </div>
+
+          {/* ── Right: Photo + Stats ── */}
+          <div className="fade-up fade-up-2" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+            {/* Photo */}
+            <div style={{ position: 'relative' }}>
+              {/* Glow ring */}
+              <div style={{
+                position: 'absolute', inset: -3,
+                borderRadius: 20,
+                background: 'linear-gradient(135deg, var(--indigo), var(--teal), var(--indigo))',
+                opacity: 0.5,
+                filter: 'blur(6px)',
+                zIndex: 0,
+                backgroundSize: '200% 200%',
+                animation: 'shimmer 4s linear infinite'
+              }}></div>
+              <div style={{
+                position: 'relative', zIndex: 1,
+                width: 220, height: 270,
+                borderRadius: 18,
+                overflow: 'hidden',
+                border: '2px solid rgba(79,99,210,0.4)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
+              }}>
+                <img
+                  src="./profile.jpg"
+                  alt="Sudipto Biswas"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
+                />
+              </div>
+              {/* Institution badge */}
+              <div style={{
+                position: 'absolute', bottom: -14, left: '50%', transform: 'translateX(-50%)',
+                background: 'var(--navy-800)', border: '1px solid var(--border-strong)',
+                borderRadius: 8, padding: '5px 12px',
+                display: 'flex', alignItems: 'center', gap: 6,
+                whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(0,0,0,0.4)', zIndex: 2
+              }}>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>B.Sc. SWE</span>
+                <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--text-muted)' }}></span>
+                <span style={{ fontSize: '0.7rem', color: '#818cf8', fontWeight: 600 }}>DIU, 2026</span>
+              </div>
+            </div>
+
+            {/* Stats grid */}
+            <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: 260, marginTop: '1rem' }}>
+              {stats.map((s, i) => <StatCard key={i} stat={s} animate={inView} />)}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Scroll cue */}
+        <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center' }}>
+          <a href="#research" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, color: 'var(--text-muted)', fontSize: '0.7rem', textDecoration: 'none', opacity: 0.6 }}>
+            <span>Scroll to explore</span>
+            <ChevronDown size={14} style={{ animation: 'fadeUp 1s ease-in-out infinite alternate' }} />
+          </a>
         </div>
 
       </div>

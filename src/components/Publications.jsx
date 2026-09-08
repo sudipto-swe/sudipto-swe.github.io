@@ -1,144 +1,179 @@
 import React, { useState } from 'react';
 import { cvData } from '../data/cvData';
-import { BookOpen, FileText, ChevronDown, ChevronUp, Copy, Check, ExternalLink, Tag } from 'lucide-react';
+import { ChevronDown, ChevronUp, Copy, Check, Tag, FileText, Bookmark } from 'lucide-react';
+
+const VENUE_COLORS = {
+  'ACM TOSEM Target': 'badge-indigo',
+  'IEEE TMC / IEEE Access Target': 'badge-teal',
+  'ACM FSE Target': 'badge-gold',
+  'USENIX Security Target': 'badge-rose',
+};
+
+function BibtexInline({ bibtex }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(bibtex);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div style={{ marginTop: '1.25rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>BibTeX</span>
+        <button onClick={copy} className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.72rem', gap: 5 }}>
+          {copied ? <><Check size={11} style={{ color: '#6ee7b7' }} /> Copied</> : <><Copy size={11} /> Copy</>}
+        </button>
+      </div>
+      <div className="code-block" style={{ fontSize: '0.72rem' }}>{bibtex}</div>
+    </div>
+  );
+}
 
 export default function Publications({ onOpenBibtex }) {
   const { manuscripts } = cvData;
-  const [expandedId, setExpandedId] = useState('flakeguard'); // default open first paper
+  const [expanded, setExpanded] = useState('flakeguard');
+  const [showBibtex, setShowBibtex] = useState({});
 
-  const toggleExpand = (id) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
+  const toggle = (id) => setExpanded(p => p === id ? null : id);
 
   return (
-    <section id="publications" className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/80">
-      
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-        <div>
-          <div className="flex items-center gap-3">
-            <BookOpen className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-2xl sm:text-3xl font-serif-academic font-bold text-white tracking-tight">
-              Manuscripts & Working Papers
-            </h2>
-          </div>
-          <p className="text-sm text-slate-400 mt-1">
-            Academic manuscripts derived from formal undergraduate research and independent investigations.
-          </p>
+    <section id="publications" style={{ padding: '5rem 0', borderTop: '1px solid var(--border)' }}>
+      <div className="container">
+        <div className="section-label">Academic Output</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+          <h2 className="section-title">Manuscripts & Working Papers</h2>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'var(--glass)', border: '1px solid var(--border)', borderRadius: 8, padding: '5px 12px', fontFamily: 'JetBrains Mono, monospace' }}>
+            ACM TOSEM · IEEE TMC · ACM FSE · USENIX Sec
+          </span>
         </div>
 
-        <span className="self-start sm:self-auto px-3 py-1 rounded-full bg-indigo-950 text-indigo-300 text-xs font-mono-code border border-indigo-800">
-          Target Venues: ACM TOSEM • IEEE TMC • ACM FSE • USENIX Sec
-        </span>
-      </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {manuscripts.map((ms, idx) => {
+            const open = expanded === ms.id;
+            return (
+              <div key={ms.id} className="pub-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
 
-      <div className="space-y-6">
-        {manuscripts.map((item, idx) => {
-          const isExpanded = expandedId === item.id;
-
-          return (
-            <div key={item.id} className="glass-card p-6 border-slate-800 transition">
-              
-              {/* Header Info */}
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                <div className="space-y-2 flex-1">
-                  
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-indigo-900/60 text-indigo-300 border border-indigo-700/50">
-                      {item.badge}
-                    </span>
-                    <span className="px-2.5 py-0.5 rounded text-[11px] font-mono-code bg-slate-800 text-slate-300">
-                      {item.status} ({item.year})
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-serif-academic font-bold text-white leading-snug">
-                    {idx + 1}. {item.title}
-                  </h3>
-
-                  {/* Authors */}
-                  <div className="text-sm text-slate-300">
-                    {item.authors.map((author, aIdx) => (
-                      <span key={aIdx} className={author === "Sudipto Biswas" ? "font-bold text-indigo-300 underline decoration-indigo-500/50" : ""}>
-                        {author}{aIdx < item.authors.length - 1 ? ", " : ""}
+                    {/* Badges */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
+                      <span className={`badge ${VENUE_COLORS[ms.badge] || 'badge-indigo'}`}>
+                        <Bookmark size={10} /> {ms.badge}
                       </span>
-                    ))}
+                      <span className="badge badge-teal" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                        {ms.status}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 style={{
+                      fontFamily: 'Newsreader, Georgia, serif',
+                      fontSize: '1.1rem',
+                      fontWeight: 700,
+                      color: 'var(--text-primary)',
+                      lineHeight: 1.4,
+                      marginBottom: 8
+                    }}>
+                      {idx + 1}. {ms.title}
+                    </h3>
+
+                    {/* Authors */}
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: 6 }}>
+                      {ms.authors.map((a, i) => (
+                        <span key={i}>
+                          <span style={a === 'Sudipto Biswas' ? { fontWeight: 700, color: '#818cf8', textDecoration: 'underline', textDecorationColor: 'rgba(129,140,248,0.4)' } : {}}>
+                            {a}
+                          </span>
+                          {i < ms.authors.length - 1 ? ', ' : ''}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Venue */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.77rem', color: 'var(--gold-light)' }}>
+                      <Tag size={11} /> {ms.targetVenue}
+                    </div>
                   </div>
 
-                  {/* Target Venue */}
-                  <div className="text-xs text-amber-400 font-medium flex items-center gap-1.5 pt-1">
-                    <Tag className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{item.targetVenue}</span>
-                  </div>
-
-                </div>
-
-                {/* Quick Actions */}
-                <div className="flex items-center gap-2 self-start">
+                  {/* Expand button */}
                   <button
-                    onClick={() => onOpenBibtex(item)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition"
+                    onClick={() => toggle(ms.id)}
+                    className="btn btn-outline"
+                    style={{ padding: '6px 12px', fontSize: '0.75rem', flexShrink: 0, gap: 5 }}
                   >
-                    <FileText className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>BibTeX</span>
-                  </button>
-
-                  <button
-                    onClick={() => toggleExpand(item.id)}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 text-xs font-medium border border-indigo-800/80 transition"
-                  >
-                    <span>{isExpanded ? "Hide Abstract" : "Abstract & Findings"}</span>
-                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    {open ? <><ChevronUp size={13} /> Collapse</> : <><ChevronDown size={13} /> Abstract</>}
                   </button>
                 </div>
-              </div>
 
-              {/* Expandable Section */}
-              {isExpanded && (
-                <div className="mt-6 pt-4 border-t border-slate-800/80 space-y-4 fade-in">
-                  
-                  {/* LaTeX Formula if present */}
-                  {item.formula && (
-                    <div className="math-box my-3">
-                      <div className="text-[11px] text-slate-400 mb-1">Composite Sub-Layer Sensitivity Metric:</div>
-                      <div className="text-base text-indigo-300 font-mono-code">
-                        {item.formula}
+                {/* Expanded section */}
+                {open && (
+                  <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', animation: 'fadeUp 0.2s ease-out' }}>
+
+                    {/* Formula */}
+                    {ms.formula && (
+                      <div style={{
+                        background: 'rgba(79,99,210,0.06)',
+                        border: '1px solid rgba(79,99,210,0.2)',
+                        borderRadius: 8,
+                        padding: '0.875rem 1rem',
+                        marginBottom: '1.25rem'
+                      }}>
+                        <div style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', marginBottom: 6 }}>
+                          Core Sensitivity Formula
+                        </div>
+                        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1rem', color: '#818cf8', fontWeight: 600 }}>
+                          S = 0.3σ̂² + 0.3γ̂ + 0.4τ̂
+                        </div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: 5, lineHeight: 1.6 }}>
+                          where σ̂² = norm. activation variance, γ̂ = norm. gradient norm, τ̂ = norm. Hutchinson Hessian trace (K=5)
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Abstract */}
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', marginBottom: 8 }}>
+                        Abstract
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+                        {ms.abstract}
+                      </p>
+                    </div>
+
+                    {/* Highlights */}
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', marginBottom: 10 }}>
+                        Key Contributions
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 8 }}>
+                        {ms.highlights.map((h, i) => (
+                          <div key={i} style={{
+                            display: 'flex', gap: 10, alignItems: 'flex-start',
+                            padding: '10px 12px',
+                            background: 'rgba(255,255,255,0.025)',
+                            borderRadius: 8,
+                            border: '1px solid var(--border)',
+                            fontSize: '0.8rem',
+                            color: 'var(--text-secondary)',
+                            lineHeight: 1.55
+                          }}>
+                            <span style={{ color: 'var(--indigo-light)', fontWeight: 700, flexShrink: 0, fontFamily: 'JetBrains Mono, monospace', fontSize: '0.7rem', marginTop: 1 }}>
+                              [{String(i + 1).padStart(2, '0')}]
+                            </span>
+                            {h}
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  )}
 
-                  {/* Abstract */}
-                  <div>
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                      Manuscript Abstract
-                    </h4>
-                    <p className="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-3.5 rounded-lg border border-slate-800/60">
-                      {item.abstract}
-                    </p>
+                    <BibtexInline bibtex={ms.bibtex} />
                   </div>
-
-                  {/* Highlights Bullet List */}
-                  <div>
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                      Key Methodological Contributions
-                    </h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                      {item.highlights.map((h, hIdx) => (
-                        <li key={hIdx} className="flex items-start gap-2 bg-slate-900/40 p-2 rounded border border-slate-800/40">
-                          <span className="text-indigo-400 font-bold">•</span>
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                </div>
-              )}
-
-            </div>
-          );
-        })}
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-
     </section>
   );
 }

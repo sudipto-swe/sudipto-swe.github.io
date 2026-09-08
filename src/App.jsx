@@ -1,75 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Statement from './components/Statement';
 import Publications from './components/Publications';
-import InteractiveDemos from './components/InteractiveDemos';
+import Visualizer from './components/Visualizer';
 import Experience from './components/Experience';
 import Skills from './components/Skills';
-import References from './components/References';
 import Footer from './components/Footer';
-import BibtexModal from './components/BibtexModal';
-import DeployModal from './components/DeployModal';
+import { cvData } from './data/cvData';
 
-export default function App() {
-  const [isDark, setIsDark] = useState(true);
-  const [selectedBibtexItem, setSelectedBibtexItem] = useState(null);
-  const [deployModalOpen, setDeployModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-    }
-  }, [isDark]);
-
-  const toggleTheme = () => setIsDark(!isDark);
-
+function App() {
   const handleDownloadCV = () => {
-    // Generate/print CV or prompt user
-    window.print();
+    // We assume the CV PDF will be in the public directory
+    const link = document.createElement('a');
+    link.href = '/Sudipto_Biswas_CV.pdf';
+    link.download = 'Sudipto_Biswas_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 transition-colors duration-300">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Header onDownloadCV={handleDownloadCV} />
       
-      {/* Sticky Header */}
-      <Header
-        isDark={isDark}
-        toggleTheme={toggleTheme}
-        onDownloadCV={handleDownloadCV}
-      />
-
-      {/* Main Content Areas */}
-      <main className="flex-grow space-y-4">
+      <main style={{ flex: 1 }}>
         <Hero onDownloadCV={handleDownloadCV} />
+        
         <Statement />
-        <Publications onOpenBibtex={(item) => setSelectedBibtexItem(item)} />
-        <InteractiveDemos />
+        
+        <Publications />
+        
+        <Visualizer />
+        
         <Experience />
+        
         <Skills />
-        <References />
       </main>
 
-      {/* Footer */}
-      <Footer onOpenDeployGuide={() => setDeployModalOpen(true)} />
-
-      {/* BibTeX Citation Modal */}
-      {selectedBibtexItem && (
-        <BibtexModal
-          manuscript={selectedBibtexItem}
-          onClose={() => setSelectedBibtexItem(null)}
-        />
-      )}
-
-      {/* GitHub Pages Deploy Guide Modal */}
-      {deployModalOpen && (
-        <DeployModal onClose={() => setDeployModalOpen(false)} />
-      )}
-
+      <Footer />
     </div>
   );
 }
+
+export default App;

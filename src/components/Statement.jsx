@@ -1,50 +1,66 @@
 import React from 'react';
 import { cvData } from '../data/cvData';
-import { ShieldAlert, Cpu, Code2, Sparkles } from 'lucide-react';
+import { ShieldAlert, Cpu, Code2 } from 'lucide-react';
+
+const ICONS = {
+  ShieldAlert: <ShieldAlert size={22} />,
+  Cpu: <Cpu size={22} />,
+  Code2: <Code2 size={22} />,
+};
+
+const COLORS = ['var(--indigo)', 'var(--teal)', 'var(--gold)'];
 
 export default function Statement() {
   const { researchAreas } = cvData;
 
-  const iconMap = {
-    ShieldAlert: <ShieldAlert className="w-6 h-6 text-indigo-400" />,
-    Cpu: <Cpu className="w-6 h-6 text-teal-400" />,
-    Code2: <Code2 className="w-6 h-6 text-amber-400" />
-  };
-
   return (
-    <section id="focus" className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/80">
-      
-      <div className="flex items-center gap-3 mb-8">
-        <Sparkles className="w-5 h-5 text-indigo-400" />
-        <h2 className="text-2xl sm:text-3xl font-serif-academic font-bold text-white tracking-tight">
-          Research Directions & Philosophy
+    <section id="research" style={{ padding: '5rem 0' }}>
+      <div className="container">
+        <div className="section-label">Research Philosophy</div>
+        <h2 className="section-title" style={{ marginBottom: '0.75rem' }}>
+          Core Research Directions
         </h2>
-      </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: 540, marginBottom: '2.5rem', lineHeight: 1.7 }}>
+          Three interconnected research pillars addressing evaluation rigour, 
+          hardware efficiency, and code generation robustness.
+        </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {researchAreas.map((area, idx) => (
-          <div key={idx} className="glass-card p-6 flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-bl-full pointer-events-none group-hover:bg-indigo-500/10 transition"></div>
-            
-            <div>
-              <div className="p-3 rounded-lg bg-slate-900/90 w-fit mb-4 border border-slate-800">
-                {iconMap[area.icon]}
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+          {researchAreas.map((area, idx) => (
+            <div key={idx} className="card card-lift" style={{ padding: '1.75rem', position: 'relative', overflow: 'hidden' }}>
+              {/* Accent corner */}
+              <div style={{
+                position: 'absolute', top: 0, right: 0,
+                width: 80, height: 80,
+                background: `radial-gradient(circle at top right, ${COLORS[idx]}18, transparent 70%)`,
+                pointerEvents: 'none'
+              }}></div>
+
+              <div style={{
+                width: 44, height: 44, borderRadius: 10,
+                background: `${COLORS[idx]}18`,
+                border: `1px solid ${COLORS[idx]}35`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: COLORS[idx],
+                marginBottom: '1rem'
+              }}>
+                {ICONS[area.icon]}
               </div>
 
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition">
+              <div style={{ fontSize: '0.65rem', fontWeight: 700, color: COLORS[idx], letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
+                Pillar {idx + 1}
+              </div>
+
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10, lineHeight: 1.35 }}>
                 {area.title}
               </h3>
 
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
                 {area.description}
               </p>
             </div>
-
-            <div className="mt-6 pt-3 border-t border-slate-800/60 flex items-center text-xs font-mono-code text-indigo-400">
-              <span>Pillar {idx + 1}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
