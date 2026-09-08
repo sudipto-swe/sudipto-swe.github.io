@@ -42,7 +42,6 @@ export default function Header({ onDownloadCV }) {
       <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
         <div className="nav-inner">
           <a href="#about" className="nav-brand">
-            <span className="nav-brand-dot"></span>
             Sudipto Biswas
             <span style={{ color: 'var(--text-muted)', fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '0.78rem', marginLeft: 4 }}>/ CS PhD Applicant</span>
           </a>

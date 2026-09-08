@@ -71,7 +71,7 @@ export default function Hero({ onDownloadCV }) {
                 fontSize: '0.72rem', fontWeight: 600, color: '#a5b4fc',
                 letterSpacing: '0.03em'
               }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#6ee7b7', display: 'inline-block', boxShadow: '0 0 6px #6ee7b7' }}></span>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#818cf8', display: 'inline-block' }}></span>
                 Targeting Ph.D. in CS / Software Engineering — Fall 2027 / 2026
               </span>
             </div>
@@ -158,23 +158,12 @@ export default function Hero({ onDownloadCV }) {
           <div className="fade-up fade-up-2" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
             {/* Photo */}
             <div style={{ position: 'relative' }}>
-              {/* Glow ring */}
-              <div style={{
-                position: 'absolute', inset: -3,
-                borderRadius: 20,
-                background: 'linear-gradient(135deg, var(--indigo), var(--teal), var(--indigo))',
-                opacity: 0.5,
-                filter: 'blur(6px)',
-                zIndex: 0,
-                backgroundSize: '200% 200%',
-                animation: 'shimmer 4s linear infinite'
-              }}></div>
               <div style={{
                 position: 'relative', zIndex: 1,
                 width: 220, height: 270,
                 borderRadius: 18,
                 overflow: 'hidden',
-                border: '2px solid rgba(79,99,210,0.4)',
+                border: '1px solid var(--border-strong)',
                 boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
               }}>
                 <img
@@ -209,7 +198,7 @@ export default function Hero({ onDownloadCV }) {
         <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center' }}>
           <a href="#research" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, color: 'var(--text-muted)', fontSize: '0.7rem', textDecoration: 'none', opacity: 0.6 }}>
             <span>Scroll to explore</span>
-            <ChevronDown size={14} style={{ animation: 'fadeUp 1s ease-in-out infinite alternate' }} />
+            <ChevronDown size={14} />
           </a>
         </div>
 

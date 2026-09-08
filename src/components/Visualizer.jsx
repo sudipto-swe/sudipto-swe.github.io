@@ -18,15 +18,6 @@ export default function Visualizer() {
           }
           return p + 2;
         });
-        
-        // Jitter metrics slightly to look live
-        if (Math.random() > 0.5) {
-          setMetrics(m => ({
-            f1: Math.min(0.99, m.f1 + (Math.random() * 0.02 - 0.01)),
-            precision: Math.min(0.99, m.precision + (Math.random() * 0.02 - 0.01)),
-            recall: Math.min(0.99, m.recall + (Math.random() * 0.02 - 0.01))
-          }));
-        }
       }, 50);
     }
     return () => clearInterval(interval);
@@ -151,30 +142,12 @@ export default function Visualizer() {
                   </div>
                 )}
               </div>
-              
-              {/* Scan line effect when running */}
-              {running && (
-                <div style={{
-                  position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-                  background: 'rgba(14,165,233,0.5)',
-                  boxShadow: '0 0 10px rgba(14,165,233,0.8)',
-                  animation: 'scan 2s linear infinite'
-                }}></div>
-              )}
             </div>
 
           </div>
 
         </div>
       </div>
-      <style>{`
-        @keyframes scan {
-          0% { top: 0%; opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { top: 100%; opacity: 0; }
-        }
-      `}</style>
     </section>
   );
 }
