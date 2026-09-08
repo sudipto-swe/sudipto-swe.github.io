@@ -7,8 +7,9 @@ function useCountUp(target, duration = 1800, start = false) {
   useEffect(() => {
     if (!start) return;
     let startTime = null;
-    const numeric = parseFloat(target.replace(/[^0-9.]/g, ''));
-    const suffix  = target.replace(/[0-9.,]/g, '');
+    const targetStr = String(target);
+    const numeric = parseFloat(targetStr.replace(/[^0-9.]/g, '')) || 0;
+    const suffix  = targetStr.replace(/[0-9.,]/g, '');
     const step = (ts) => {
       if (!startTime) startTime = ts;
       const progress = Math.min((ts - startTime) / duration, 1);

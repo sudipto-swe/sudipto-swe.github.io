@@ -1,6 +1,6 @@
 export const cvData = {
   personal: {
-    name: "SUDIPTO BISWAS",
+    name: "Sudipto Biswas",
     title: "Undergraduate Researcher",
     subtitle: "B.Sc. in Software Engineering at Daffodil International University",
     targetDegree: "Targeting Ph.D. Applications in Computer Science / Software Engineering for Fall 2027 / 2026",
@@ -11,15 +11,16 @@ export const cvData = {
     github: "https://github.com/sudipto-swe",
     githubUsername: "sudipto-swe",
     scholar: "https://scholar.google.com",
+    linkedin: "https://linkedin.com/in/sudipto-swe",
     photoUrl: "./profile.jpg",
     about: "Undergraduate Software Engineering researcher focusing on Software Testing, Flaky Test Detection, Benchmark Reproducibility, and On-Device ML & LLM Quantization. Thesis research conducted under the direct supervision of Dr. Md. Abdul Kader with additional guidance from Dr. Imran Mahmud and Dr. S M Hasan Mahmud."
   },
-  
+
   stats: [
     { label: "Manuscripts Target", value: "4", detail: "ACM TOSEM, IEEE TMC, ACM FSE, USENIX Sec" },
     { label: "Audit Benchmark", value: "673", detail: "IDoFT Test Pairs (239 Flaky / 434 Non-Flaky)" },
-    { label: "Quantized Code Runs", value: "20,760", detail: "HumanEval/MBPP Sandboxed Generations" },
-    { label: "LLM Hallucination Reduction", value: "78.9%", detail: "PyPI AST-Reflect Reflection Loop" }
+    { label: "Quantized Code Runs", value: "20760", detail: "HumanEval/MBPP Sandboxed Generations" },
+    { label: "Hallucination Reduction", value: "78.9", detail: "PyPI AST-Reflect Reflection Loop %" }
   ],
 
   researchAreas: [
@@ -72,7 +73,7 @@ export const cvData = {
       year: "2026",
       status: "Thesis Manuscript in Preparation",
       badge: "IEEE TMC / IEEE Access Target",
-      formula: "S = 0.3\\hat{\\sigma}^2 + 0.3\\hat{\\gamma} + 0.4\\hat{\\tau}",
+      formula: true,
       abstract: "Deploying Large Language Models on mobile hardware requires aggressive quantization without severe perplexity degradation. We propose AMPQ, a static Post-Training Quantization (PTQ) framework that fuses activation variance (σ²), gradient norm (γ), and Hutchinson Hessian traces (τ, K = 5) into a composite sub-layer sensitivity metric S = 0.3σ̂² + 0.3γ̂ + 0.4τ̂. Solved memory-constrained precision assignment ({4, 8, 16} bits) via a greedy knapsack solver, compressing Gemma-2-2B by 3.04× and recovering perplexity to 47.01 (vs. 59.51 Uniform 4-bit RTN baseline, outperforming AutoAWQ's 52.88). Sustained 20.7 tok/s at 754.6 mJ/tok on Apple Silicon (M5) and verified OOM-free memory fit on a physical Snapdragon 888 device.",
       highlights: [
         "Static PTQ Sensitivity: Fused activation variance (σ²), gradient norm (γ), and Hutchinson Hessian traces (τ, K=5) into composite metric S = 0.3σ̂² + 0.3γ̂ + 0.4τ̂.",
@@ -138,51 +139,66 @@ export const cvData = {
 
   experience: [
     {
-      role: "Independent Researcher",
+      role: "Independent Researcher — FlakeGuard",
+      institution: "Daffodil International University",
       period: "Aug 2025 – Present",
-      project: "FlakeGuard — Methodological Audit of Static Flaky Test Detectors",
-      target: "ACM TOSEM",
-      location: "Dhaka, Bangladesh",
-      details: [
-        "Audit Design: Audited FLAST's published F1 = 0.988 on a frozen, checksummed IDoFT benchmark (673 pairs: 239 flaky, 434 non-flaky across 44 projects) under strict project-grouped GroupKFold evaluation.",
-        "Defect Discovery: Demonstrated that leakage-checked FLAST collapses to F1 = 0.258 (below the trivial 0.524 baseline). Uncovered 5 red flags (RF1–RF5) including cross-split vocabulary leakage, asymmetric label-noise bias, and silent GumTree AST-diff failures (0/673 success).",
-        "Corrective Findings: Proved commit-graph/PR features carry true predictive signal (F1 = 0.589, McNemar p = 4.8 × 10⁻⁸ vs. FLAST, paired cluster bootstrap ΔF1 = -0.33). Released a transparent 194-check audit script and five-seed sensitivity analysis (0.49–0.59)."
+      advisor: null,
+      highlights: [
+        "Audited FLAST's published F1 = 0.988 on frozen, checksummed IDoFT benchmark (673 pairs: 239 flaky, 434 non-flaky across 44 projects) under strict project-grouped GroupKFold evaluation.",
+        "Demonstrated that leakage-checked FLAST collapses to F1 = 0.258 (below the trivial 0.524 baseline). Uncovered 5 red flags (RF1–RF5) including cross-split vocabulary leakage.",
+        "Proved commit-graph/PR features carry true predictive signal (F1 = 0.589, McNemar p = 4.8 × 10⁻⁸ vs. FLAST). Released 194-check audit script with five-seed sensitivity analysis."
       ]
     },
     {
-      role: "Undergraduate Thesis Researcher",
+      role: "Undergraduate Thesis Researcher — AMPQ",
+      institution: "Daffodil International University",
       period: "Jan 2026 – Present",
-      project: "AMPQ — Adaptive Mixed-Precision Quantization",
-      supervisor: "Dr. Md. Abdul Kader",
-      target: "IEEE TMC / IEEE Access",
-      location: "Dhaka, Bangladesh",
-      details: [
-        "Sensitivity Formulation: Developed a static PTQ framework fusing activation variance (σ²), gradient norm (γ), and Hutchinson Hessian traces (τ, K = 5) into a composite sub-layer sensitivity metric (S = 0.3σ̂² + 0.3γ̂ + 0.4τ̂).",
-        "Knapsack Optimization: Solved memory-constrained precision assignment ({4, 8, 16} bits) via a greedy knapsack solver, compressing Gemma-2-2B by 3.04× and recovering perplexity to 47.01 (vs. 59.51 Uniform 4-bit RTN baseline, outperforming AutoAWQ's 52.88).",
-        "Hardware Deployment: Sustained 20.7 tok/s at 754.6 mJ/tok on Apple Silicon (M5) and verified OOM-free memory fit on a physical Snapdragon 888 device."
+      advisor: "Dr. Md. Abdul Kader (Supervisor), Dr. Imran Mahmud & Dr. S M Hasan Mahmud (Guidance)",
+      highlights: [
+        "Developed static PTQ framework fusing activation variance (σ²), gradient norm (γ), and Hutchinson Hessian traces (τ, K=5) into composite sensitivity metric S = 0.3σ̂² + 0.3γ̂ + 0.4τ̂.",
+        "Solved {4,8,16}-bit precision assignment via greedy knapsack solver, compressing Gemma-2-2B by 3.04× and recovering perplexity to 47.01 (vs. 59.51 baseline).",
+        "Sustained 20.7 tok/s at 754.6 mJ/tok on Apple Silicon (M5) and verified OOM-free memory fit on Snapdragon 888."
       ]
     },
     {
-      role: "Independent Researcher",
+      role: "Independent Researcher — RobustCode-Bench",
+      institution: "Daffodil International University",
       period: "Feb 2025 – Aug 2025",
-      project: "RobustCode-Bench — Structural Brittleness in Quantized Code-LLMs",
-      target: "ACM FSE",
-      location: "Dhaka, Bangladesh",
-      details: [
-        "AST Transformations: Formulated 4 semantics-preserving AST transformations (T1–T4) across 663 verified HumanEval/MBPP tasks, running 20,760 sandboxed generations across 3 models (Qwen2.5-Coder-7B, DeepSeek-Coder-6.7B, CodeLlama-7B) at FP16 and 4-bit NF4.",
-        "Empirical Analysis: Discovered identifier renaming (T2) degrades Pass@1 by up to 25.4%, and 4-bit quantization amplifies structural brittleness up to 16.6× on weaker models."
+      advisor: null,
+      highlights: [
+        "Formulated 4 semantics-preserving AST transformations (T1–T4) across 663 verified HumanEval/MBPP tasks.",
+        "Ran 20,760 sandboxed generations across 3 models (Qwen2.5-Coder-7B, DeepSeek-Coder-6.7B, CodeLlama-7B) at FP16 and 4-bit NF4.",
+        "Discovered identifier renaming (T2) degrades Pass@1 by up to 25.4%, and quantization amplifies brittleness up to 16.6×."
       ]
     },
     {
-      role: "Independent Researcher",
+      role: "Independent Researcher — AST-Reflect",
+      institution: "Daffodil International University",
       period: "Jun 2024 – Jan 2025",
-      project: "AST-Reflect — Mitigating Package Hallucinations in Quantized Code LLMs",
-      target: "USENIX Security",
-      location: "Dhaka, Bangladesh",
-      details: [
-        "Hallucination Quantification: Quantified package hallucinations across 4,806 generations over a 160-task elicitation corpus under a 2-arm decoding design (t = 0.8 vs. t = 0.2).",
-        "Reflection Loop: Built AST-Reflect, an external PyPI-oracle reflection loop resolving 78.9% of hallucinations with zero canonical Pass@1 regression."
+      advisor: null,
+      highlights: [
+        "Quantified package hallucinations across 4,806 generations over a 160-task elicitation corpus under 2-arm decoding design.",
+        "Built AST-Reflect, an external PyPI-oracle reflection loop resolving 78.9% of hallucinations with zero canonical Pass@1 regression."
       ]
+    }
+  ],
+
+  technicalSkills: [
+    {
+      category: "Languages",
+      skills: ["Python", "C", "C++", "Java", "JavaScript", "TypeScript", "SQL", "Bash", "LaTeX"]
+    },
+    {
+      category: "Frameworks & Libraries",
+      skills: ["PyTorch", "Hugging Face Transformers", "scikit-learn", "React", "Node.js", "Model Quantization (PTQ, AWQ, GPTQ, NF4)", "AST Analysis (ast, ast.unparse)"]
+    },
+    {
+      category: "Tools & Platforms",
+      skills: ["Git", "GitHub Actions (CI/CD)", "Docker", "Linux", "Kaggle Cloud Accelerators", "PostgreSQL", "SQLite"]
+    },
+    {
+      category: "Core Strengths",
+      skills: ["Statistical Testing (McNemar, Cluster Bootstrap)", "Benchmark Reproducibility", "Empirical Software Engineering", "Technical Writing (LaTeX)", "Research Methodology"]
     }
   ],
 
@@ -202,27 +218,6 @@ export const cvData = {
       "Operating Systems",
       "Applied Statistics",
       "Software Architecture"
-    ]
-  },
-
-  skills: {
-    programming: ["Python", "C", "C++", "Java", "JavaScript", "TypeScript", "SQL", "Bash", "LaTeX"],
-    mlAndAnalysis: [
-      "PyTorch",
-      "Hugging Face Transformers",
-      "scikit-learn",
-      "Model Quantization (PTQ, AWQ, GPTQ, NF4)",
-      "AST Analysis (ast, ast.unparse)",
-      "Statistical Testing (McNemar, Cluster Bootstrap)"
-    ],
-    toolsAndInfra: [
-      "Git",
-      "GitHub Actions (CI/CD)",
-      "Docker",
-      "Linux",
-      "Kaggle Cloud Accelerators",
-      "PostgreSQL",
-      "SQLite"
     ]
   },
 
